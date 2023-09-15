@@ -1,11 +1,16 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>AutomationFrameworkProject.com</groupId>
-  <artifactId>AutomationFrameworkProject</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <description>				</description>
-  <dependencies>
-	  <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>AutomationFrameworkProject.com</groupId>
+    <artifactId>AutomationFrameworkProject</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <description>Describe your project here</description>
+
+    <dependencies>
+        <!-- ... (your existing dependencies) ... -->
+         <!-- https://mvnrepository.com/artifact/org.testng/testng -->
 <dependency>
     <groupId>org.testng</groupId>
     <artifactId>testng</artifactId>
@@ -38,7 +43,7 @@
 </dependency>
 <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
 <dependency>
-    <groupId>io.github.bonigarcia</groupId>
+	 <groupId>io.github.bonigarcia</groupId>
     <artifactId>webdrivermanager</artifactId>
     <version>5.3.2</version>
 </dependency>
@@ -49,8 +54,61 @@
     <artifactId>mysql-connector-j</artifactId>
     <version>8.0.33</version>
 </dependency>
+    </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version> <!-- Update to the latest version -->
+                <executions>
+                    <execution>
+                        <id>smoke-tests</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <suiteXmlFiles>
+                                <!-- Define your TestNG suite XML file with the desired suite name -->
+                                <suiteXmlFile>src/test/resources/smoke-test-suite.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
-  </dependencies>
- 
+    <profiles>
+        <!-- Define the "smoke" profile -->
+        <profile>
+            <id>smoke</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>smoke-tests</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- Define a profile for smoke testing -->
+                                    <suiteXmlFiles>
+                                        <!-- Define the suite file specifically for the "smoke" profile -->
+                                        <suiteXmlFile>src/test/resources/smoke-test-suite.xml</suiteXmlFile>
+                                    </suiteXmlFiles>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
